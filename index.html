@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Raphael Motorka — Computer Science student exploring AI, software development, game development and 3D engineering.">
+
+    <title>Raphael Motorka — Computer Science & Technology</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #080a0f;
+            --bg-soft: #0d1017;
+            --card: rgba(17, 21, 30, 0.72);
+            --card-hover: rgba(23, 28, 40, 0.9);
+
+            --text: #f3f5f7;
+            --muted: #9aa4b2;
+            --subtle: #697386;
+
+            --accent: #62d8ff;
+            --accent-2: #8b7cff;
+            --green: #62e6a5;
+
+            --border: rgba(255,255,255,0.08);
+            --border-accent: rgba(98,216,255,0.28);
+
+            --radius: 18px;
+            --max-width: 1120px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 15% 10%, rgba(98,216,255,0.08), transparent 28%),
+                radial-gradient(circle at 85% 25%, rgba(139,124,255,0.08), transparent 30%),
+                var(--bg);
+
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.22;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, black, transparent 80%);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(var(--max-width), calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* ---------- NAV ---------- */
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+
+            background: rgba(8,10,15,0.72);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-inner {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .nav-links a {
+            transition: color .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 130px 0 90px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.25fr .75fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            font-family: "JetBrains Mono", monospace;
+            color: var(--accent);
+            font-size: 13px;
+            letter-spacing: .08em;
+            margin-bottom: 22px;
+        }
+
+        .eyebrow::before {
+            content: ">";
+            margin-right: 8px;
+            color: var(--green);
+        }
+
+        h1 {
+            font-size: clamp(48px, 7vw, 86px);
+            line-height: .98;
+            letter-spacing: -0.055em;
+            margin-bottom: 28px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                110deg,
+                #ffffff,
+                #bcefff 45%,
+                #9287ff
+            );
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .pill {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.025);
+            color: #cbd2dc;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all .2s ease;
+        }
+
+        .button.primary {
+            color: #061018;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(98,216,255,.2);
+        }
+
+        .button.secondary:hover {
+            border-color: var(--border-accent);
+            background: rgba(98,216,255,.05);
+        }
+
+        /* ---------- TERMINAL ---------- */
+
+        .terminal {
+            background: rgba(11,14,20,.85);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.35),
+                0 0 60px rgba(98,216,255,.04);
+        }
+
+        .terminal-bar {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #303744;
+        }
+
+        .dot:first-child { background: #ff6b6b; }
+        .dot:nth-child(2) { background: #ffd166; }
+        .dot:nth-child(3) { background: #62e6a5; }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+            line-height: 2;
+            color: #aeb7c5;
+        }
+
+        .terminal-body .key {
+            color: var(--accent);
+        }
+
+        .terminal-body .value {
+            color: #d8dee8;
+        }
+
+        .terminal-body .green {
+            color: var(--green);
+        }
+
+        /* ---------- SECTIONS ---------- */
+
+        section {
+            padding: 110px 0;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 45px;
+        }
+
+        .section-number {
+            color: var(--accent);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            letter-spacing: -.04em;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            max-width: 680px;
+        }
+
+        /* ---------- ABOUT ---------- */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .about-card {
+            padding: 30px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            border-radius: var(--radius);
+        }
+
+        .about-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .about-card p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* ---------- PROJECTS ---------- */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .project {
+            position: relative;
+            overflow: hidden;
+
+            padding: 28px;
+            min-height: 310px;
+
+            border: 1px solid var(--border);
+            background: linear-gradient(
+                145deg,
+                rgba(17,21,30,.9),
+                rgba(11,14,20,.9)
+            );
+
+            border-radius: var(--radius);
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                background .25s ease;
+        }
+
+        .project::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -70px;
+            bottom: -80px;
+
+            background: radial-gradient(
+                circle,
+                rgba(98,216,255,.13),
+                transparent 70%
+            );
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-accent);
+            background: var(--card-hover);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .project-index {
+            color: var(--subtle);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+        }
+
+        .project-status {
+            color: var(--green);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+        }
+
+        .project h3 {
+            font-size: 23px;
+            letter-spacing: -.025em;
+            margin-bottom: 12px;
+        }
+
+        .project p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.75;
+            margin-bottom: 22px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tech {
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: rgba(98,216,255,.055);
+            border: 1px solid rgba(98,216,255,.1);
+            color: #9ddff2;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10px;
+        }
+
+        /* ---------- FOCUS ---------- */
+
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .focus-card {
+            padding: 24px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.018);
+            border-radius: 14px;
+        }
+
+        .focus-icon {
+            font-family: "JetBrains Mono", monospace;
+            color: var(--accent);
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .focus-card h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .focus-card p {
+            color: var(--subtle);
+            font-size: 13px;
+        }
+
+        /* ---------- SKILLS ---------- */
+
+        .skills-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .skill-group {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--card);
+        }
+
+        .skill-group h3 {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .skill-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,.045);
+        }
+
+        .skill-row:last-child {
+            border-bottom: 0;
+        }
+
+        .skill-name {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 12px;
+            color: #d6dce5;
+        }
+
+        .skill-level {
+            font-size: 10px;
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        /* ---------- TIMELINE ---------- */
+
+        .timeline {
+            border-left: 1px solid rgba(98,216,255,.2);
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            left: -34px;
+            top: 7px;
+            box-shadow: 0 0 15px rgba(98,216,255,.5);
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ---------- AI ---------- */
+
+        .ai-card {
+            position: relative;
+            overflow: hidden;
+            padding: 45px;
+
+            border: 1px solid rgba(139,124,255,.25);
+            border-radius: 22px;
+
+            background:
+                radial-gradient(circle at 90% 10%, rgba(139,124,255,.13), transparent 30%),
+                radial-gradient(circle at 10% 90%, rgba(98,216,255,.09), transparent 30%),
+                var(--card);
+        }
+
+        .ai-card h3 {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .ai-card p {
+            color: var(--muted);
+            max-width: 750px;
+            margin-bottom: 25px;
+        }
+
+        .ai-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ai-tag {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 11px;
+            padding: 7px 10px;
+            border-radius: 7px;
+            background: rgba(139,124,255,.08);
+            border: 1px solid rgba(139,124,255,.16);
+            color: #bcb4ff;
+        }
+
+        /* ---------- CONTACT ---------- */
+
+        .contact {
+            text-align: center;
+            padding-bottom: 140px;
+        }
+
+        .contact h2 {
+            max-width: 700px;
+            margin: 0 auto 15px;
+        }
+
+        .contact p {
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            color: var(--subtle);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 10px;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media (max-width: 850px) {
+            .hero-grid,
+            .about-grid,
+            .skills-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                gap: 45px;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .focus-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                width: min(100% - 28px, var(--max-width));
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            .focus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-card {
+                padding: 28px;
+            }
+
+            footer .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAV ================= -->
+
+<nav>
+    <div class="container nav-inner">
+
+        <a class="logo" href="#top">
+            <span>./</span>astroraphy
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#ai">AI</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="container hero-grid">
+
+        <div>
+
+            <div class="eyebrow">
+                Computer Science · Engineering · Exploration
+            </div>
+
+            <h1>
+                Raphael<br>
+                <span class="gradient-text">Motorka.</span>
+            </h1>
+
+            <p class="hero-description">
+                Computer Science student interested in AI, software development,
+                game development and the intersection of digital and physical systems.
+                I like turning ideas into things that actually work.
+            </p>
+
+            <div class="hero-meta">
+                <span class="pill">B.Sc. Computer Science</span>
+                <span class="pill">TH Ingolstadt</span>
+                <span class="pill">Airbus Defence & Space</span>
+            </div>
+
+            <div class="buttons">
+                <a class="button primary" href="#projects">
+                    Explore my work →
+                </a>
+
+                <a class="button secondary"
+                   href="https://github.com/astroraphy"
+                   target="_blank">
+                    GitHub ↗
+                </a>
+            </div>
+
+        </div>
+
+
+        <div class="terminal">
+
+            <div class="terminal-bar">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <div class="terminal-body">
+
+                <div><span class="key">const</span> developer = {</div>
+
+                <div>
+                    &nbsp;&nbsp;name:
+                    <span class="value">"Raphael Motorka"</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;focus:
+                    <span class="value">[
+                    "AI",
+                    "Software",
+                    "Games",
+                    "3D"
+                    ]</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;currently:
+                    <span class="green">"building"</span>,
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;mindset:
+                    <span class="value">"learn → build → iterate"</span>
+                </div>
+
+                <div>};</div>
+
+                <br>
+
+                <div>
+                    <span class="green">✓</span>
+                    ready_to_build();
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-header">
+            <div class="section-number">01 / ABOUT</div>
+
+            <h2>Building things,<br>not just studying them.</h2>
+
+            <p class="section-subtitle">
+                I am a dual Computer Science student at Technische Hochschule
+                Ingolstadt, combining university studies with practical experience
+                at Airbus Defence & Space.
+            </p>
+        </div>
+
+
+        <div class="about-grid">
+
+            <div class="about-card">
+                <h3>How I like to work</h3>
+
+                <p>
+                    I enjoy starting with a concrete problem, experimenting with
+                    possible solutions and turning the result into a working prototype.
+                    My projects range from software and games to custom CAD designs
+                    and physical systems.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>What interests me</h3>
+
+                <p>
+                    My current interests are AI, intelligent automation,
+                    game development, 3D applications and the connection between
+                    software and the physical world.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-number">02 / PROJECTS</div>
+
+            <h2>Things I've built.</h2>
+
+            <p class="section-subtitle">
+                A selection of personal projects — from custom mechanical designs
+                to games and software applications.
+            </p>
+
+        </div>
+
+
+        <div class="projects">
+
+            <!-- PROJECT 01 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">01</span>
+                    <span class="project-status">IN USE</span>
+                </div>
+
+                <h3>NFC Smart Desk Phone Holder</h3>
+
+                <p>
+                    A custom-designed smartphone holder combining Fusion 360,
+                    3D printing and NFC-based automation. Placing the phone on
+                    the holder activates a custom workspace setup: desk lighting
+                    is enabled, other room lights are switched off and
+                    Do Not Disturb is activated.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">Fusion 360</span>
+                    <span class="tech">3D Printing</span>
+                    <span class="tech">NFC</span>
+                    <span class="tech">Automation</span>
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 02 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">02</span>
+                    <span class="project-status">IN USE</span>
+                </div>
+
+                <h3>Custom USB Hub & Desk Organizer</h3>
+
+                <p>
+                    A precision-fit desktop system designed around three USB hubs.
+                    The design integrates storage for USB drives, TF and SD cards
+                    and a pen holder while remaining securely attached without
+                    screws, magnets or external mounting hardware.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">Fusion 360</span>
+                    <span class="tech">CAD</span>
+                    <span class="tech">3D Printing</span>
+                    <span class="tech">Mechanical Design</span>
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 03 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">03</span>
+                    <span class="project-status">PROJECT</span>
+                </div>
+
+                <h3>GraviWorld</h3>
+
+                <p>
+                    A 2D platformer built around a gravity-based gameplay mechanic.
+                    Special gravity plates alter the player's gravitational behavior
+                    in different ways, creating movement challenges and opportunities
+                    for level design.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">C#</span>
+                    <span class="tech">Unity</span>
+                    <span class="tech">Android</span>
+                    <span class="tech">Game Development</span>
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 04 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">04</span>
+                    <span class="project-status">IN USE</span>
+                </div>
+
+                <h3>Modular Magnetic Keyboard Stand</h3>
+
+                <p>
+                    A modular keyboard mounting system featuring a magnetic base,
+                    detachable wrist rest and a 22.5° angled support. The components
+                    are designed to connect magnetically and can be rearranged
+                    without tools.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">Fusion 360</span>
+                    <span class="tech">CAD</span>
+                    <span class="tech">3D Printing</span>
+                    <span class="tech">Mechanical Design</span>
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 05 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">05</span>
+                    <span class="project-status">PROJECT</span>
+                </div>
+
+                <h3>CatGame</h3>
+
+                <p>
+                    A 2D top-down action game for Android in which players control
+                    a cat with different abilities while fighting mice and dogs.
+                    Interactive food bowls restore health and add an additional
+                    gameplay mechanic beyond combat.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">C#</span>
+                    <span class="tech">Unity</span>
+                    <span class="tech">Android</span>
+                    <span class="tech">Game Development</span>
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 06 -->
+
+            <article class="project">
+
+                <div class="project-top">
+                    <span class="project-index">06</span>
+                    <span class="project-status">PROJECT</span>
+                </div>
+
+                <h3>Modular Card Holder</h3>
+
+                <p>
+                    A compact card holder designed in Fusion 360 around
+                    interchangeable front plates. The modular design allows
+                    the same base to support different use cases and visual
+                    configurations.
+                </p>
+
+                <div class="tech-stack">
+                    <span class="tech">Fusion 360</span>
+                    <span class="tech">CAD</span>
+                    <span class="tech">3D Printing</span>
+                    <span class="tech">Modular Design</span>
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOCUS ================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-number">03 / FOCUS</div>
+
+            <h2>Where curiosity leads.</h2>
+
+        </div>
+
+
+        <div class="focus-grid">
+
+            <div class="focus-card">
+                <div class="focus-icon">01 //</div>
+                <h3>Artificial Intelligence</h3>
+                <p>
+                    Exploring AI, intelligent automation and practical applications.
+                </p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-icon">02 //</div>
+                <h3>Software</h3>
+                <p>
+                    Building applications and experimenting with different technologies.
+                </p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-icon">03 //</div>
+                <h3>Game Development</h3>
+                <p>
+                    Designing gameplay systems and turning ideas into interactive experiences.
+                </p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-icon">04 //</div>
+                <h3>3D & CAD</h3>
+                <p>
+                    Designing physical systems, prototypes and functional objects.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-number">04 / SKILLS</div>
+
+            <h2>Tools I work with.</h2>
+
+            <p class="section-subtitle">
+                A realistic snapshot of technologies I've worked with so far.
+            </p>
+
+        </div>
+
+
+        <div class="skills-layout">
+
+            <div class="skill-group">
+
+                <h3>Programming</h3>
+
+                <div class="skill-row">
+                    <span class="skill-name">C#</span>
+                    <span class="skill-level">Primary</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Java</span>
+                    <span class="skill-level">Foundations</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Python</span>
+                    <span class="skill-level">Exploring</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">SQL</span>
+                    <span class="skill-level">Foundations</span>
+                </div>
+
+            </div>
+
+
+            <div class="skill-group">
+
+                <h3>Tools & Platforms</h3>
+
+                <div class="skill-row">
+                    <span class="skill-name">Visual Studio Code</span>
+                    <span class="skill-level">Daily</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Unity</span>
+                    <span class="skill-level">Experienced</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Fusion 360</span>
+                    <span class="skill-level">Active</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Linux</span>
+                    <span class="skill-level">Exploring</span>
+                </div>
+
+            </div>
+
+
+            <div class="skill-group">
+
+                <h3>Data & Systems</h3>
+
+                <div class="skill-row">
+                    <span class="skill-name">SQLite</span>
+                    <span class="skill-level">Foundations</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">Git / GitHub</span>
+                    <span class="skill-level">Working knowledge</span>
+                </div>
+
+            </div>
+
+
+            <div class="skill-group">
+
+                <h3>Engineering Interests</h3>
+
+                <div class="skill-row">
+                    <span class="skill-name">AI / ML</span>
+                    <span class="skill-level">Exploring</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">3D Applications</span>
+                    <span class="skill-level">Interested</span>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-name">3D Printing</span>
+                    <span class="skill-level">Active</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TIMELINE ================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-number">05 / EARLIER WORK</div>
+
+            <h2>Where it started.</h2>
+
+            <p class="section-subtitle">
+                Earlier projects that shaped my interest in software and game development.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">EARLIER PROJECT</div>
+
+                <h3>ClickTheCircles</h3>
+
+                <p>
+                    A reaction-based mobile game developed in C#.
+                    Players click moving circles to score points while
+                    different difficulty levels change target size,
+                    movement and scoring.
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-date">EARLIER PROJECT</div>
+
+                <h3>Vocabulary Learning Application</h3>
+
+                <p>
+                    A Java desktop application for entering and practicing
+                    personal vocabulary through interactive quizzes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AI ================= -->
+
+<section id="ai">
+
+    <div class="container">
+
+        <div class="ai-card">
+
+            <div class="section-number">06 / CURRENTLY EXPLORING</div>
+
+            <h3>AI is the direction I'm heading next.</h3>
+
+            <p>
+                I am particularly interested in how artificial intelligence can
+                be turned into useful, interactive systems rather than remaining
+                purely theoretical. I'm currently exploring AI with a focus on
+                practical applications, intelligent automation and rapid prototyping.
+            </p>
+
+            <div class="ai-tags">
+
+                <span class="ai-tag">Artificial Intelligence</span>
+                <span class="ai-tag">Machine Learning</span>
+                <span class="ai-tag">Generative AI</span>
+                <span class="ai-tag">AI Prototyping</span>
+                <span class="ai-tag">Automation</span>
+                <span class="ai-tag">Human–Computer Interaction</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="contact">
+
+    <div class="container">
+
+        <div class="section-number">07 / CONTACT</div>
+
+        <h2>
+            Let's build something interesting.
+        </h2>
+
+        <p>
+            Interested in AI, software, games, 3D systems or just building
+            something that hasn't been built yet?
+        </p>
+
+        <div class="contact-links">
+
+            <a
+                class="button primary"
+                href="https://github.com/astroraphy"
+                target="_blank">
+                GitHub ↗
+            </a>
+
+            <!-- Replace this with your actual LinkedIn URL -->
+            <a
+                class="button secondary"
+                href="#"
+                onclick="alert('Add your LinkedIn URL here!'); return false;">
+                LinkedIn ↗
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <span>© <span id="year"></span> Raphael Motorka</span>
+
+        <span>built with curiosity // deployed on GitHub Pages</span>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+    // Current year
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+
+    // Small reveal animation
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+
+            });
+        },
+        { threshold: 0.08 }
+    );
+
+
+    document.querySelectorAll(
+        ".project, .about-card, .focus-card, .skill-group, .timeline-item, .ai-card"
+    ).forEach(element => {
+
+        element.style.opacity = "0";
+        element.style.transform = "translateY(18px)";
+        element.style.transition =
+            "opacity .65s ease, transform .65s ease";
+
+        observer.observe(element);
+
+    });
+
+</script>
+
+</body>
+</html>
